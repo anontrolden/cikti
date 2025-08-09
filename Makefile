@@ -1,6 +1,5 @@
 run:
-	cd backend && fastapi run main.py 
-	cd frontend && npm run dev -- --host 0.0.0.0
+	cd backend && fastapi run main.py & cd frontend && npm run dev -- --host 0.0.0.0 &
 	
 
 install:
