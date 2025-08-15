@@ -1,8 +1,20 @@
 from typing import Union
 from typing import Annotated
 from fastapi import FastAPI, Form
-
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
+
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -22,3 +34,7 @@ def login(name: Annotated[str, Form()], password: Annotated[str, Form()]):
     else:
         return {"hata": "şifre yanlış"}
 
+@app.get("/files")
+def files():
+    return ["1.txt","2.txt","3.txt","4.txt"]
+    
