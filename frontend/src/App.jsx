@@ -57,6 +57,20 @@ function App() {
         </div>
       </form>
 
+      <form action="http://localhost:8000/register" method="post" class="form-example">
+        <div class="form-example">
+          <label for="name">Kullanıcı adı: </label>
+          <input type="text" name="name" id="name" required />
+        </div>
+        <div class="form-example">
+          <label for="email">Şifre : </label>
+          <input type="password" name="password" id="password" required />
+        </div>
+        <div class="form-example">
+          <input type="submit" value="kaydol!" />
+        </div>
+      </form>
+
       <form action="http://localhost:8000/login" method="post" class="form-example">
         <div class="form-example">
           <label for="dosya">Kullanıcı adı: </label>
