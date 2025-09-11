@@ -29,12 +29,22 @@ def read_item(item_id: int, q: Union[str, None] = None):
 
 @app.post("/login/")
 def login(name: Annotated[str, Form()], password: Annotated[str, Form()]):
-    if name == "asd" and password == "123":
-        return {"name": name}
+    print(kullanicilar)
+    if name not in kullanicilar:
+        return "hata kullanici mevcut değil"
+    if kullanicilar[name] == password:
+        return "kullanici nevcut"
     else:
-        return {"hata": "şifre yanlış"}
+        return "sıfre hatali"
 
 @app.get("/files")
 def files():
     return ["1.txt","2.txt","3.txt","4.txt"]
     
+kullanicilar = {"asd":"123"}
+@app.post("/register/")
+def login(name: Annotated[str, Form()], password: Annotated[str, Form()]):
+    if name in kullanicilar:
+        return "hata kullanici mevcut"
+    kullanicilar[name] = password
+    return {"kullanicilar": kullanicilar}
