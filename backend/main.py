@@ -1,7 +1,9 @@
 from typing import Union
 from typing import Annotated
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import HTTPException
+
 app = FastAPI()
 
 origins = [
@@ -29,22 +31,26 @@ def read_item(item_id: int, q: Union[str, None] = None):
 
 @app.post("/login/")
 def login(name: Annotated[str, Form()], password: Annotated[str, Form()]):
-    print(kullanicilar)
     if name not in kullanicilar:
-        return "hata kullanici mevcut değil"
+        raise HTTPException(status_code=400, detail="Kullanıcı mevcut değil")
     if kullanicilar[name] == password:
-        return "kullanici nevcut"
+        return "kullanici mevcut"
     else:
-        return "sıfre hatali"
+        raise HTTPException(status_code=400, detail="Şifre hatalı")
 
 @app.get("/files")
 def files():
     return ["1.txt","2.txt","3.txt","4.txt"]
+
+@app.post("/uploadfile")
+def login(dosya: Annotated[str, UploadFile]):
+    print(dosya)
+    return {}
     
 kullanicilar = {"asd":"123"}
 @app.post("/register/")
 def login(name: Annotated[str, Form()], password: Annotated[str, Form()]):
     if name in kullanicilar:
-        return "hata kullanici mevcut"
+        raise HTTPException(status_code=400, detail="Kullanıcı zaten mevcut")
     kullanicilar[name] = password
-    return {"kullanicilar": kullanicilar}
+    return 
